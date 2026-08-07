@@ -72,9 +72,8 @@ services:
     container_name: producer
     volumes:
       - ./src/producer:/app/src/producer
-      - ./requirements.txt:/app/requirements.txt
     working_dir: /app
-    command: bash -c "pip install -r requirements.txt && python -u src/producer/market_data_generator.py"
+    command: bash -c "pip install -r src/producer/requirements.txt && python -u src/producer/market_data_generator.py"
     environment:
       - KAFKA_BROKER=kafka:29092
     depends_on:
