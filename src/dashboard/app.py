@@ -7,7 +7,7 @@ from kafka import KafkaConsumer
 app = Flask(__name__)
 
 KAFKA_BROKER = os.environ.get("KAFKA_BROKER", "kafka:9092")
-TOPIC_NAME = "spy-candles"
+TOPIC_NAME = "btc-candles"
 
 def get_kafka_consumer():
     # Loop retries to wait for kafka to start

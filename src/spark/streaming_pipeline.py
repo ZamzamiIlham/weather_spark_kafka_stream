@@ -9,9 +9,9 @@ from pyspark.sql.types import StructType, StructField, StringType, DoubleType, I
 # Konfigurasi Kafka
 # Menggunakan 'kafka:9092' karena script ini dijalankan di dalam container Docker yang sama dengan network compose
 KAFKA_BROKER = os.environ.get("KAFKA_BROKER", "kafka:29092")
-INPUT_TOPIC = "spy-trades"
-VALID_OUTPUT_TOPIC = "spy-candles"
-DLQ_TOPIC = "spy-dead-letter"
+INPUT_TOPIC = "btc-trades"
+VALID_OUTPUT_TOPIC = "btc-candles"
+DLQ_TOPIC = "btc-dead-letter"
 
 def get_spark_session():
     # Menyiapkan session Spark dengan package kafka-sql
@@ -25,7 +25,7 @@ def get_schema():
         StructField("trade_id", StringType(), True),
         StructField("symbol", StringType(), True),
         StructField("price", DoubleType(), True),
-        StructField("volume", IntegerType(), True),
+        StructField("volume", DoubleType(), True),
         StructField("timestamp", StringType(), True)
     ])
 
