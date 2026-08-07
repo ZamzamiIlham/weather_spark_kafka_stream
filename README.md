@@ -31,8 +31,8 @@ Buka IDE Anda dan arahkan ke folder utama proyek ini (`kafka-spark-streaming-boo
 Langkah pertama dalam *pipeline* adalah mengumpulkan data. Buka file **`src/producer/market_data_generator.py`**. 
 
 **Highlight Logika Script:**
-1.  **Simulasi Data Bitcoin (BTC)**: Script ini memiliki fungsi `generate_trade_data()` yang mensimulasikan pergerakan harga (*mock data*) secara kontinu untuk Bitcoin (`BTC-USD`) di kisaran harga $60,000 dengan metode *random walk*. (Kita menggunakan *mock data* agar *pipeline* ini dijamin 100% bisa berjalan di laptop peserta tanpa takut terblokir oleh koneksi *wifi* kampus/kantor atau terblokir ISP lokal).
-2.  **Injeksi Data Kotor (*Dirty Data*)**: Perhatikan baris kode `is_dirty_data = random.random() < 0.05`. Terdapat probabilitas 5% sistem sengaja mengubah harga dari Binance menjadi harga negatif atau volume nol. Ini sangat penting untuk mensimulasikan data rusak/anomali untuk menguji fitur *Data Validation* ETL kita nanti!
+1.  **Simulasi Data Bitcoin Asli (Yahoo Finance)**: Script ini menggunakan API publik dari **Yahoo Finance** untuk mengunduh sejarah pergerakan harga Bitcoin 1 hari terakhir. Data asli tersebut kemudian "diputar ulang" (*replay*) satu per satu setiap detik untuk mensimulasikan aliran data (*streaming*) secara *real-time*. Ini adalah teknik *Data Engineering* yang sangat umum digunakan untuk *backtesting pipeline* tanpa takut terkena blokir (*rate-limit*) atau kendala jaringan!
+2.  **Injeksi Data Kotor (*Dirty Data*)**: Perhatikan baris kode `is_dirty_data = random.random() < 0.05`. Terdapat probabilitas 5% sistem sengaja mengubah harga dari Yahoo Finance menjadi harga negatif atau volume nol. Ini sangat penting untuk mensimulasikan data rusak/anomali untuk menguji fitur *Data Validation* ETL kita nanti!
 3.  **Pengiriman ke Kafka**: Menggunakan *library* `kafka-python`, script ini secara konstan mengirim (Produce) data yang sudah distandarisasi ke dalam *Topic* Kafka yang bernama **`btc-trades`**.
 
 ---
